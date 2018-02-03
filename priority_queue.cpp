@@ -12,6 +12,21 @@ Time: 2018/02/02
 
 using namespace std;
 
+class myCompare
+{
+	private:
+		bool reverse;
+	public:
+		myCompare(const bool& param=false):reverse(param){}
+		bool operator() (const int& lhs, const int& rhs)
+		{
+			if(reverse)
+				return lhs > rhs;
+			else
+				return lhs < rhs;
+		}
+	
+};
 int main()
 {
 	/* demonstrate empty function of priority queue */
@@ -61,6 +76,33 @@ int main()
 		fruitQ.pop();
 	}
 	cout<<endl;
+	cout<<endl;
 
+	/* demonstrate the constructor of priority queue */
+	cout<<"-----demonstrate constructor for compare rules for the priority queue-----"<<endl;
+	cout<<"insert integer from 1 to 5 into a priority which with the myCompare rule..."<<endl;
+	priority_queue<int,vector<int>, myCompare> compareQ1;
+	for(int i = 1; i <= 5; ++i)
+		compareQ1.push(i);
+	cout<<"output the elements in the priority queue we just created, the sequence should be 5,4,3,2,1"<<endl;
+	cout<<"ouput the elements in compareQ1..."<<endl;
+	while(!compareQ1.empty())
+	{
+		cout<<compareQ1.top()<<" ";
+		compareQ1.pop();
+	}
+	cout<<endl;
+	cout<<"create another priority queue with the reverse sorting order"<<endl;
+	priority_queue<int, vector<int>, myCompare> compareQ2(myCompare(true));
+	for(int i = 1; i <= 5; ++i)
+		compareQ2.push(i);
+	cout<<"output the elements in the reverse priority queue we just created, the sequence should be 1,2,3,4,5"<<endl;
+	cout<<"output the elements in compareQ2..."<<endl;
+	while(!compareQ2.empty())
+	{
+		cout<<compareQ2.top()<<" ";
+		compareQ2.pop();
+	}
+	cout<<endl;
 	return 0;
 }
